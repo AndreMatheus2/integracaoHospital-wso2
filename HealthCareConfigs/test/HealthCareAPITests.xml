@@ -1,0 +1,82 @@
+<unit-test>
+    <artifacts>
+        <test-artifact>
+            <artifact>/HealthCareConfigs/src/main/synapse-config/api/HealthCareAPI.xml</artifact>
+        </test-artifact>
+        <supportive-artifacts>
+            <artifact>/HealthCare/HealthCareConfigs/src/main/synapse-config/endpoints/ChannelingFeeEndpoint.xml</artifact>
+            <artifact>/HealthCare/HealthCareConfigs/src/main/synapse-config/endpoints/GrandOakEP.xml</artifact>
+        </supportive-artifacts>
+        <registry-resources>
+            <registry-resource>
+                <file-name>RequestToReserve.dmc</file-name>
+                <artifact>/HealthCare/HealthCareRegistryResources/RequestToReserve.dmc</artifact>
+                <registry-path>/_system/governance/datamapper</registry-path>
+                <media-type>text/plain</media-type>
+            </registry-resource>
+            <registry-resource>
+                <file-name>RequestToReserve_xsltStyleSheet.xml</file-name>
+                <artifact>/HealthCare/HealthCareRegistryResources/RequestToReserve_xsltStyleSheet.xml</artifact>
+                <registry-path>/_system/governance/datamapper</registry-path>
+                <media-type>text/plain</media-type>
+            </registry-resource>
+            <registry-resource>
+                <file-name>RequestToReserve_inputSchema.json</file-name>
+                <artifact>/HealthCare/HealthCareRegistryResources/RequestToReserve_inputSchema.json</artifact>
+                <registry-path>/_system/governance/datamapper</registry-path>
+                <media-type>text/plain</media-type>
+            </registry-resource>
+            <registry-resource>
+                <file-name>RequestToReserve_outputSchema.json</file-name>
+                <artifact>/HealthCare/HealthCareRegistryResources/RequestToReserve_outputSchema.json</artifact>
+                <registry-path>/_system/governance/datamapper</registry-path>
+                <media-type>text/plain</media-type>
+            </registry-resource>
+        </registry-resources>
+        <connector-resources/>
+    </artifacts>
+    <test-cases>
+        <test-case name="ResponseValidation">
+            <input>
+                <request-path>/surgery/reserve</request-path>
+                <request-method>POST</request-method>
+                <request-protocol>https</request-protocol>
+                <payload><![CDATA[{
+    "patient": {
+		"name": "John Doe",
+		"dob": "1990-03-19",
+		"ssn": "234-23-525",
+		"address": "California",
+		"phone": "8770586755",
+		"email": "johndoe@gmail.com"
+	},
+	"doctor": "thomas collins",
+	"hospital": "grand oak community hospital",
+	"appointment_date": "2025-06-02"
+}]]></payload>
+                <properties>
+                    <property name="Content-Type" scope="transport" value="application/json"/>
+                </properties>
+            </input>
+            <assertions>
+                <assertEquals>
+                    <actual>
+                                                                                                $body
+                    
+                    
+                    
+                    </actual>
+                    <expected><![CDATA[{
+    "patientName": "john doe",
+    "doctorName": "thomas collins",
+    "actualFee": "7000.0"
+}]]></expected>
+                    <message>Invalid Response</message>
+                </assertEquals>
+            </assertions>
+        </test-case>
+    </test-cases>
+    <mock-services>
+        <mock-service>/HealthCare/HealthCareConfigs/test/resources/mock-services/GrandOakMockBackEnd.xml</mock-service>
+    </mock-services>
+</unit-test>

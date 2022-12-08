@@ -1,0 +1,45 @@
+<mock-service>
+    <service-name>GrandOakEP</service-name>
+    <port>9091</port>
+    <context>/reserve</context>
+    <resources>
+        <resource>
+            <sub-context>/</sub-context>
+            <method>POST</method>
+            <request>
+                <payload>
+                    <![CDATA[{
+ "patient": {
+ "name": "John Doe",
+ "dob": "1990-03-19",
+ "ssn": "234-23-525",
+ "address": "California",
+ "phone": "8770586755",
+ "email": "johndoe@gmail.com"
+ },
+ "doctor": "thomas collins",
+ "hospital": "grand oak community hospital",
+ "appointment_date": "2025-04-02"
+}]]>
+                </payload>
+                <headers>
+                    <header name="Content-Type" value="application/json"/>
+                </headers>
+            </request>
+            <response>
+                <status-code>200</status-code>
+                <payload>
+                    <![CDATA[{"appointmentNumber":1,
+ "doctor":
+ {"name":"thomas collins",
+ "hospital":"grand oak community hospital",
+ "category":"surgery","availability":"9.00 a.m - 11.00 a.m",
+ "fee":7000.0},
+ "patient":
+ {"name":"John Doe",
+ "dob":"1990-03-19",]]>
+                </payload>
+            </response>
+        </resource>
+    </resources>
+</mock-service>

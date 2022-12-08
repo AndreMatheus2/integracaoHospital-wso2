@@ -1,0 +1,9 @@
+---
+apiVersion: "wso2.com/v1alpha2"
+kind: "Integration"
+metadata:
+  name: "healthcare"
+spec:
+  image: "andrematheus/kubernetesmicroei-wso2:1.0.0"
+  deploySpec:
+    minReplicas: 2

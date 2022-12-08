@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/healthcare" name="HealthCareAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/categories/{category}/reserve">
+        <inSequence>
+            <datamapper config="gov:datamapper/RequestToReserve.dmc" inputSchema="gov:datamapper/RequestToReserve_inputSchema.json" inputType="JSON" outputSchema="gov:datamapper/RequestToReserve_outputSchema.json" outputType="JSON" xsltStyleSheet="gov:datamapper/RequestToReserve_xsltStyleSheet.xml"/>
+            <property description="Category" expression="get-property('uri.var.category')" name="CATEGORY" scope="default" type="STRING"/>
+            <call>
+                <endpoint key="GrandOakEP"/>
+            </call>
+            <property description="appointment" expression="json-eval($.appointmentNumber)" name="uri.var.appointment" scope="default" type="STRING"/>
+            <call>
+                <endpoint key="ChannelingFeeEndpoint"/>
+            </call>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>
